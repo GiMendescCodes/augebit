@@ -88,17 +88,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
 
                 <form class="login-form" method="POST" id="loginForm" <?php if ($success_message)
+<<<<<<< HEAD
                     echo 'style="display:none;"';?>
                     <div class="input-group">
                         <div class="input-wrapper">
                             <span class="input-icon">🧑</span>
+=======
+                    echo 'style="display:none;"';?>>
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <span class="input-icon"><img src="img/imgNome.png" alt=""></span>
+>>>>>>> b26db88 (up)
                             <input type="text" id="nome" name="nome" placeholder="Nome completo" required>
                         </div>
                     </div>
 
                     <div class="input-group">
                         <div class="input-wrapper">
+<<<<<<< HEAD
                             <span class="input-icon">🆔</span>
+=======
+                            <span class="input-icon"><img src="img/imgCpf.png" alt=""></span>
+>>>>>>> b26db88 (up)
                             <input type="text" id="cpf" name="cpf" placeholder="CPF (somente números)" required
                                 pattern="\d+">
                         </div>

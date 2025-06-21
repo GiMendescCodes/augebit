@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Desempenho Profissional</title>
     <style>
+<<<<<<< HEAD
          @font-face {
+=======
+        @font-face {
+>>>>>>> b26db88 (up)
             font-family: 'fonte1';
             src: url('../fontes/eurostile.TTF');
         }
@@ -20,6 +24,10 @@
             font-family: 'fonte3';
             src: url('../fontes/MontserratAlternates-Regular.ttf');
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b26db88 (up)
         * {
             margin: 0;
             padding: 0;
@@ -177,12 +185,20 @@
             color: #2c3e50;
             font-weight: 600;
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b26db88 (up)
         .form-group img,
         .form-group img {
             width: 32px;
             height: 32px;
             margin-bottom: -8px;
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b26db88 (up)
         .form-group input,
         .form-group select {
             width: 100%;
@@ -713,9 +729,24 @@
         }
 
         function getPerformanceLevel(score) {
+<<<<<<< HEAD
             if (score >= 8.5) return { level: 'Desempenho excelente', class: 'excellent' };
             if (score >= 7) return { level: 'Desempenho bom', class: 'good' };
             return { level: 'Desempenho médio', class: 'average' };
+=======
+            if (score >= 8.5) return {
+                level: 'Desempenho excelente',
+                class: 'excellent'
+            };
+            if (score >= 7) return {
+                level: 'Desempenho bom',
+                class: 'good'
+            };
+            return {
+                level: 'Desempenho médio',
+                class: 'average'
+            };
+>>>>>>> b26db88 (up)
         }
 
         function updateCalculations() {
@@ -765,7 +796,13 @@
             container.innerHTML = evaluations.map((evaluation, index) => {
                 const performance = getPerformanceLevel(evaluation.average);
                 const chartData = evaluations.slice(Math.max(0, index - 5), index + 1).map((e, i) => ({
+<<<<<<< HEAD
                     month: new Date(e.month).toLocaleDateString('pt-BR', { month: 'short' }),
+=======
+                    month: new Date(e.month).toLocaleDateString('pt-BR', {
+                        month: 'short'
+                    }),
+>>>>>>> b26db88 (up)
                     score: e.average
                 }));
 
@@ -857,13 +894,21 @@
         }
 
         // Event listeners
+<<<<<<< HEAD
         document.addEventListener('input', function (e) {
+=======
+        document.addEventListener('input', function(e) {
+>>>>>>> b26db88 (up)
             if (e.target.matches('.weight-input, .score-input')) {
                 updateCalculations();
             }
         });
 
+<<<<<<< HEAD
         document.getElementById('evaluationForm').addEventListener('submit', function (e) {
+=======
+        document.getElementById('evaluationForm').addEventListener('submit', function(e) {
+>>>>>>> b26db88 (up)
             e.preventDefault();
 
             const name = document.getElementById('employeeName').value;
