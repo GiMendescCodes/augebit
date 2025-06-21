@@ -1,0 +1,240 @@
+@font-face {
+    font-family: 'Font1';
+    src: url('fonts/eurostile.TTF')
+}
+
+@font-face {
+    font-family: 'Font2';
+    src: url('fonts/Montserrat-VariableFont_wght.ttf')
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Font2';
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #8B7CF6;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 40px;
+}
+
+.login-text {
+    color: #8B7CF6;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.welcome-section {
+    color: white;
+}
+
+.title {
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 40px;
+    line-height: 1.5;
+}
+
+.profile-selection {
+    background: rgb(255, 255, 255);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.question {
+    text-align: center;
+    font-size: 16px;
+    color: #8B7CF6;
+    margin-bottom: 24px;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    border: none;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    width: 100%;
+}
+
+.funcionario-btn {
+    background: #6E6DFF;
+}
+
+.funcionario-btn:hover {
+    background: #5353d6;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+}
+
+.rh-btn {
+    background: #6E6DFF;
+}
+
+.rh-btn:hover {
+    background: #5353d6;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+}
+
+.btn-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.icon-image {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+}
+
+.btn-text {
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Seção da ilustração */
+.illustration-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 750px;
+    width: 650px;
+    background-color: #F2F2F3;
+    border-radius: 20px;
+}
+
+.illustration {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .title {
+        font-size: 36px;
+    }
+    
+    .profile-selection {
+        padding: 24px;
+    }
+    
+    .illustration-container {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 16px;
+    }
+    
+    .title {
+        font-size: 28px;
+    }
+    
+    .profile-btn {
+        padding: 16px 20px;
+        gap: 16px;
+    }
+    
+    .btn-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .icon-image {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .btn-text {
+        font-size: 14px;
+    }
+}
+
+
+.gif {
+    object-fit: cover;
+    object-fit: contain;
+    width: 650px
+
+}
+
+.icon{
+    width:60px ;
+    height:60px ;
+}
+
+.btn-link{
+    color: white;
+    text-decoration: none;
+}

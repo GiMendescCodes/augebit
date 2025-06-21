@@ -1,0 +1,542 @@
+@font-face {
+    font-family: 'Font1';
+    src: url('./fonts/eurostile.TTF')
+}
+
+@font-face {
+    font-family: 'Font2';
+    src: url('./fonts/Montserrat-VariableFont_wght.ttf')
+}
+
+
+
+
+.logo {
+    width: 150px;
+    height: 150px;
+}
+
+.comeco {
+    display: flex;
+    flex-direction: row;
+   align-items: center;
+}
+
+.saudacao1 {
+    margin: 0;
+    padding-left: 30px;
+    font-family: 'Font1';
+    font-size: 40px;
+    font-weight: 100;
+}
+
+.texto {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+}
+
+.saudacao2 {
+    margin: 0;
+    margin-top: 5px; /* ou 4px, 6px, dependendo do visual desejado */
+    padding-left: 30px;
+    font-family: 'Font2';
+    font-size: 30px;
+    font-weight: 300;
+    }
+
+
+      
+      .sidebar {
+        width: 70px;
+        background-color: #6c63ff;
+        height: 540px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 40px;
+        border-radius: 40px;
+        margin-top: 30px;
+      }
+      
+      .menu-item {
+        width: 50px;
+        height: 50px;
+        margin: 25px 0;
+        background: none;
+        border: none;
+        position: relative;
+        cursor: pointer;
+        outline: none;
+       
+      }
+      
+      .menu-item .icon {
+        width: 100%;
+        height: 100%;
+        display: block;
+        mask-size: cover;
+        -webkit-mask-size: cover;
+        background-color: white;
+      }
+      
+      /* Exemplo de ícones usando mask (ou pode usar SVG inline) */
+      .icon.home       { mask: url('./img/home.png') no-repeat center; }
+      .icon.people   { mask: url('./img/people.png') no-repeat center; }
+      .icon.docs        { mask: url('./img/docs.png') no-repeat center; }
+      .icon.chapeu    { mask: url('./img/chapeu.png') no-repeat center; }
+      .icon.grafico      { mask: url('./img/grafico.png') no-repeat center; }
+      .icon.calendario     { mask: url('./img/calendario.png') no-repeat center; }
+      .icon.mapa      { mask: url('./img/mapa.png') no-repeat center; }
+      /* Estado ativo (com "bolinha") */
+      
+      .icon-circle {
+        width: 55px;
+        height: 60px;
+        background-color: #4d47c3; /* roxo escuro */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+      }
+      
+      .icon-circle img {
+        width: 25px;
+        height: 25px;
+      }
+
+      .tudo {
+        display: flex;
+        flex-direction: row;
+       
+      }
+
+      .informacoes {
+        display: flex;
+        flex-direction: column;
+        margin-left: 70px;
+        margin-top: 30px;
+      }
+
+      .part1 {
+        display: flex;
+        flex-direction: row;
+    
+      }
+
+      .caixa1 {
+        background-color: white;
+        border-radius: 30px;
+        width: 250px;
+        height: 140px;
+        box-shadow: 2px 5px 19px -1px rgba(153,152,255,0.7);
+        -webkit-box-shadow: 2px 5px 19px -1px rgba(153,152,255,0.7);
+        -moz-box-shadow: 2px 5px 19px -1px rgba(153,152,255,0.7);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 30px;
+        justify-content: center;
+    
+      }
+
+      .img1 {
+        width: 70px;
+        height: 70px;
+        margin-right: 20px;
+      }
+    
+.info-texto {
+  font-size: 35px;
+  font-family: 'Font2';
+  color: black;
+  text-decoration: none;
+  font-family: 'Font2';
+  font-weight: 650;
+}
+
+.info-subtexto {
+  font-size: 15px;
+  font-family: 'Font2';
+  font-weight: 400;
+  color: black;
+  text-decoration: none;
+  font-family: 'Font2';
+  font-weight: 400;
+}
+
+.textinhos {
+  display: flex;
+  flex-direction: column;
+}
+
+.part2 {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+  margin-left: 2px;
+
+}
+
+.pesquisa {
+  background-color: transparent;
+  border: none;
+  width: 500px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  font-family: 'Font2';
+  font-size: 15px;
+  justify-content: center;
+  margin-top: 14px;
+
+}
+
+.pesquisa-barra {
+  background-color: white;
+  border: none;
+  width: 500px;
+  height: 60px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  font-family: 'Font2';
+  font-size: 15px;
+  box-shadow: 2px 5px 19px -1px rgba(153,152,255,0.7);
+  -webkit-box-shadow: 2px 5px 19px -1px rgba(153,152,255,0.7);
+  -moz-box-shadow: 2px 5px 19px -1px rgba(153,152,255,0.7);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.funcionarios {
+  background-color: #7A79F0;
+  margin-left: 30px;
+  font-family: 'Font2';
+  font-size: 15px;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  width: 170px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.part3 {
+margin-top: 30px;
+margin-left: 2px;
+}
+
+table {
+  width: 100%;
+  background-color: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 2px 5px 19px -1px rgba(153,152,255,0.7);
+  -webkit-box-shadow: 2px 5px 19px -1px rgba(153,152,255,0.7);
+  -moz-box-shadow: 2px 5px 19px -1px rgba(153,152,255,0.7);
+  border: none;
+  border-collapse: collapse;
+  margin-top: 10px;
+    table-layout: fixed; 
+}
+
+thead {
+  background-color: #a3a0f9;
+  color: white;
+}
+
+th {
+  padding: 10px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: 'Font2';
+  color: white;
+  border: none;
+  
+}
+
+  td {
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+  font-family: 'Font2';
+  color: black;
+  border: 1px solid #a2a3f7;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+}
+
+
+
+.foto-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.icon-acao {
+  width: 18px;
+  height: 18px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+body {
+  background-color: #EEEEFF;
+  margin: 20px;
+
+
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #7A79F0;
+  color: white;
+  cursor: pointer;
+  font-family: 'Font2';
+  font-size: 15px;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  width: 160px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  font-weight: 500;
+  margin-left: 30px;
+  text-decoration: none;
+}
+
+.botoes-navegacao {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 50px -20px 0 0px; /* margem para afastar da borda e da tabela */
+}
+
+html, body {
+  height: 100%;
+}
+
+
+/* Já está definido, mas aqui por clareza */
+
+
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: #4646d84a;
+}
+
+.modal-content {
+  background: white;
+  width: 60%;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 30px;
+  position: relative;
+  padding-bottom: 50px;
+  height: 80%;
+}
+
+
+.img-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-right: 100px;
+}
+
+.perfil-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+
+.perfil {
+background-image: url(./img/bola.png);
+      display: flex;
+      align-items: center;
+      margin-left: 40px;
+      border-radius: 40px;
+      margin-top: 50px;
+      width: 65px;
+      height: 68px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+
+.person {
+background-image: url(./img/person.png);
+width: 35px;
+height: 28px;
+margin-left: 3px
+}
+
+label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+  font-family: 'Font2';
+  font-weight: 500;
+  padding-bottom: 5px;
+  font-size: 15px;
+}
+
+input {
+  width: 98%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #a2a3f7;
+  border-radius: 10px;
+ 
+}
+
+.RG, .genero {
+  width: 97%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #a2a3f7;
+  border-radius: 10px;
+}
+.nome {
+  width: 895px;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #a2a3f7;
+  border-radius: 10px;
+
+}
+.input-duplo, .input-triplo {
+  display: flex;
+  gap: 10px;
+}
+
+.input-duplo div, .input-triplo div {
+  flex: 1;
+}
+
+.botoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+#cancelar {
+  background-color: #c4c7ff;
+  color: #3c3f78;
+}
+
+#cancelarAtualizar {
+  background-color: #c4c7ff;
+  color: #3c3f78;
+  margin-top: 20px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+h2 {
+  font-family: 'Font1';
+  font-weight: 400;
+  font-size: 40px;
+  padding-bottom: -20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-foto {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.add {
+  width: 110px;
+  height: 100px;
+}
+
+#uploadImagem {
+  border: none;
+}
+
+#uploadImagemAtualizar {
+  border: none;
+}
+
+#cancelar {
+  margin-top: 20px;
+}
+#salvar {
+  margin-top: 20px;
+}
+#atualizar {
+  margin-top: 20px;
+}
+
+.sindicato {
+  width: 895px;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #a2a3f7;
+  border-radius: 10px;
+
+}
+
+.setor {
+  width: 508px;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #a2a3f7;
+  border-radius: 10px;
+}
+
+
+.voltar {
+  color: #6c63ff;
+display: flex;
+margin-left: 1300px;
+  padding: 10px 20px;
+  width: 160px;
+  height: 40px;
+  text-decoration: none;
+  border-radius: 20px;
+  font-family: 'Font1';
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: -50px;
+}
