@@ -5,12 +5,14 @@ include '../../conexao.php'; // ajusta o caminho conforme sua estrutura
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Augebit</title>
   <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
   <div class="comeco">
     <img class="logo" src="./img/augebit.png" alt="">
@@ -22,22 +24,22 @@ include '../../conexao.php'; // ajusta o caminho conforme sua estrutura
   <div class="tudo">
     <div class="tudo1">
       <div class="sidebar">
-        <a href="" class="menu-item">
+        <a href="/augebit/inicial/index.php" class="menu-item">
           <span class="icon home"></span>
         </a>
         <div class="icon-circle">
           <img src="img/people.png" alt="Home icon">
         </div>
-        <a href="" class="menu-item">
+        <a href="/augebit/justificativas/verificar.php" class="menu-item">
           <span class="icon docs"></span>
         </a>
         <a href="/augebit/RH/desempenho-cursos/index.php" class="menu-item">
           <span class="icon chapeu"></span>
         </a>
-        <a href="" class="menu-item">
+        <a href="/augebit/desempenho/index.php" class="menu-item">
           <span class="icon grafico"></span>
         </a>
-        <a href="" class="menu-item">
+        <a href="/augebit/solicitacoes/verificar.php" class="menu-item">
           <span class="icon calendario"></span>
         </a>
       </div>
@@ -83,70 +85,70 @@ include '../../conexao.php'; // ajusta o caminho conforme sua estrutura
             <form id="formAtualizarFuncionario">
               <h2>Atualizar informação</h2>
           </div>
-              <label>Nome Completo</label>
-              <input class="nome" type="text" name="nome" required>
+          <label>Nome Completo</label>
+          <input class="nome" type="text" name="nome" required>
 
-              <div class="input-duplo">
-                <div>
-                  <label>CPF</label>
-                  <input type="text" name="cpf" required>
-                </div>
-                <div>
-                  <label>RG</label>
-                  <input class="RG" type="text" name="rg" required>
-                </div>
-              </div>
+          <div class="input-duplo">
+            <div>
+              <label>CPF</label>
+              <input type="text" name="cpf" required>
+            </div>
+            <div>
+              <label>RG</label>
+              <input class="RG" type="text" name="rg" required>
+            </div>
+          </div>
 
-              <div class="input-duplo">
-                <div>
-                  <label>Endereço</label>
-                  <input type="text" name="endereco" required>
-                </div>
-                <div>
-                  <label>Gênero</label>
-                  <input class="genero" type="text" name="genero" required>
-                </div>
-              </div>
+          <div class="input-duplo">
+            <div>
+              <label>Endereço</label>
+              <input type="text" name="endereco" required>
+            </div>
+            <div>
+              <label>Gênero</label>
+              <input class="genero" type="text" name="genero" required>
+            </div>
+          </div>
 
-              <div class="input-triplo">
-                <div>
-                  <label>E-mail</label>
-                  <input type="email" name="email" required>
-                </div>
-                <div>
-                  <label>Telefone</label>
-                  <input type="text" name="telefone" required>
-                </div>
-                <div>
-                  <label>Nascimento</label>
-                  <input type="date" name="nascimento" required>
-                </div>
-              </div>
+          <div class="input-triplo">
+            <div>
+              <label>E-mail</label>
+              <input type="email" name="email" required>
+            </div>
+            <div>
+              <label>Telefone</label>
+              <input type="text" name="telefone" required>
+            </div>
+            <div>
+              <label>Nascimento</label>
+              <input type="date" name="nascimento" required>
+            </div>
+          </div>
 
-              <div class="input-triplo">
-                <div>
-                  <label>Estado Civil</label>
-                  <input type="text" name="estado" required>
-                </div>
-                <div>
-                  <label>PIS/PASEP</label>
-                  <input type="text" name="pis_pasep" required>
-                </div>
-                <div>
-                  <label>Carteira de Trabalho</label>
-                  <input type="text" name="carteira" required>
-                </div>
-              </div>
+          <div class="input-triplo">
+            <div>
+              <label>Estado Civil</label>
+              <input type="text" name="estado" required>
+            </div>
+            <div>
+              <label>PIS/PASEP</label>
+              <input type="text" name="pis_pasep" required>
+            </div>
+            <div>
+              <label>Carteira de Trabalho</label>
+              <input type="text" name="carteira" required>
+            </div>
+          </div>
 
-              <div class="botoes">
-                <div class="img-container">
-                  <img id="previewImagemAtualizar" class="add" src="./img/add.png" alt="Prévia da foto de perfil">
-                  <input type="file" id="uploadImagemAtualizar" accept="image/*" name="foto">
-                </div>
-                <button type="button" id="cancelarAtualizar">CANCELAR</button>
-                <button type="submit" id="atualizar">ATUALIZAR</button>
-              </div>
-            </form>
+          <div class="botoes">
+            <div class="img-container">
+              <img id="previewImagemAtualizar" class="add" src="./img/add.png" alt="Prévia da foto de perfil">
+              <input type="file" id="uploadImagemAtualizar" accept="image/*" name="foto">
+            </div>
+            <button type="button" id="cancelarAtualizar">CANCELAR</button>
+            <button type="submit" id="atualizar">ATUALIZAR</button>
+          </div>
+          </form>
         </div>
       </div>
 
@@ -154,71 +156,71 @@ include '../../conexao.php'; // ajusta o caminho conforme sua estrutura
         <div class="modal-content">
           <span class="close" id="fecharModal">&times;</span>
           <div class="text-foto">
-          <form id="formFuncionario" action="gerenciarFuncionarios.php" method="POST" enctype="multipart/form-data">
-          <input type="hidden" name="tipo_form" value="funcionario">
+            <form id="formFuncionario" action="gerenciarFuncionarios.php" method="POST" enctype="multipart/form-data">
+              <input type="hidden" name="tipo_form" value="funcionario">
               <h2>Adicionar funcionário</h2>
           </div>
-              <label>Nome Completo</label>
-              <input class="nome" type="text" name="nome" required>
+          <label>Nome Completo</label>
+          <input class="nome" type="text" name="nome" required>
 
-              <div class="input-duplo">
-                <div>
-                  <label>CPF</label>
-                  <input type="text" name="cpf" required>
-                </div>
-                <div>
-                  <label>RG</label>
-                  <input class="RG" type="text" name="rg" required>
-                </div>
-              </div>
-              <div class="input-duplo">
-                <div>
-                  <label>Endereço</label>
-                  <input type="text" name="endereco" required>
-                </div>
-                <div>
-                  <label>Gênero</label>
-                  <input class="genero" type="text" name="genero" required>
-                </div>
-              </div>
-              <div class="input-triplo">
-                <div>
-                  <label>E-mail</label>
-                  <input type="email" name="email" required>
-                </div>
-                <div>
-                  <label>Telefone</label>
-                  <input type="text" name="telefone" required>
-                </div>
-                <div>
-                  <label>Nascimento</label>
-                  <input type="date" name="nascimento" required>
-                </div>
-              </div>
-              <div class="input-triplo">
-                <div>
-                  <label>Estado Civil</label>
-                  <input type="text" name="estado" required>
-                </div>
-                <div>
-                  <label>PIS/PASEP</label>
-                  <input type="text" name="pis_pasep" required>
-                </div>
-                <div>
-                  <label>Carteira de Trabalho</label>
-                  <input type="text" name="carteira" required>
-                </div>
-              </div>
+          <div class="input-duplo">
+            <div>
+              <label>CPF</label>
+              <input type="text" name="cpf" required>
+            </div>
+            <div>
+              <label>RG</label>
+              <input class="RG" type="text" name="rg" required>
+            </div>
+          </div>
+          <div class="input-duplo">
+            <div>
+              <label>Endereço</label>
+              <input type="text" name="endereco" required>
+            </div>
+            <div>
+              <label>Gênero</label>
+              <input class="genero" type="text" name="genero" required>
+            </div>
+          </div>
+          <div class="input-triplo">
+            <div>
+              <label>E-mail</label>
+              <input type="email" name="email" required>
+            </div>
+            <div>
+              <label>Telefone</label>
+              <input type="text" name="telefone" required>
+            </div>
+            <div>
+              <label>Nascimento</label>
+              <input type="date" name="nascimento" required>
+            </div>
+          </div>
+          <div class="input-triplo">
+            <div>
+              <label>Estado Civil</label>
+              <input type="text" name="estado" required>
+            </div>
+            <div>
+              <label>PIS/PASEP</label>
+              <input type="text" name="pis_pasep" required>
+            </div>
+            <div>
+              <label>Carteira de Trabalho</label>
+              <input type="text" name="carteira" required>
+            </div>
+          </div>
 
-              <div class="botoes">
-                <div class="img-container">
-                  <img id="previewImagem" class="add" src="./img/add.png" alt="Prévia da foto de perfil">
-                  <input type="file" id="uploadImagem" accept="image/*" name="foto">
-                </div>
-                <button type="button" id="cancelar">CANCELAR</button>
-                <button type="submit" id="salvar">SALVAR</button>
-              </div>
-            </form>
+          <div class="botoes">
+            <div class="img-container">
+              <img id="previewImagem" class="add" src="./img/add.png" alt="Prévia da foto de perfil">
+              <input type="file" id="uploadImagem" accept="image/*" name="foto">
+            </div>
+            <button type="button" id="cancelar">CANCELAR</button>
+            <button type="submit" id="salvar">SALVAR</button>
+          </div>
+          </form>
         </div>
       </div>
       <div class="part3">
@@ -241,7 +243,7 @@ include '../../conexao.php'; // ajusta o caminho conforme sua estrutura
             </tr>
           </thead>
           <tbody>
-            
+
           </tbody>
         </table>
       </div>
@@ -250,4 +252,5 @@ include '../../conexao.php'; // ajusta o caminho conforme sua estrutura
   <a class="prosseguir" href="../profissional-funcionarios/index.php">prosseguir ❯</a>
   <script src="script2.js"></script>
 </body>
+
 </html>

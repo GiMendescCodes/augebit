@@ -34,35 +34,44 @@ body {
     display: flex;
 }
 
-
-.main {
-    margin-left: 80px;
-    width: calc(100% - 80px);
-    padding: 30px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.tituloInicial {
     margin-bottom: 30px;
-    margin-left: 50px;
+    margin-top: 15px;
 }
 
-.logo-container {
-    display: flex;
-    align-items: center;
+.titulo {
+    font-family: 'font1', euroStyle;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 50px;
+
+}
+
+.subtitulo {
+    font-family: 'fonte2', Montserrat, sans-serif;
+    font-weight: 300;
+    font-size: 25px;
 }
 
 .logo {
-    width: 40px;
-    height: 40px;
-    margin-right: 15px;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+}
+
+.logo img {
+    width: 20px;
+    height: 20px;
 }
 
 .title-text h1 {
     font-size: 50px;
-    font-weight: 600;
     margin-bottom: 5px;
     font-family: 'Font1';
 }
@@ -70,6 +79,7 @@ body {
 .title-text p {
     font-size: 14px;
     color: #777;
+    font-family: 'font2', sans-serif;
 }
 
 .cards-container {
@@ -173,7 +183,8 @@ body {
     font-weight: 500;
 }
 
-.request-badge, .request-date {
+.request-badge,
+.request-date {
     background-color: var(--light-primary);
     color: var(--primary-color);
     padding: 6px 18px;
@@ -272,118 +283,131 @@ body {
 }
 
 .part1 {
-      display: flex;
-      flex-direction: row;
-  
-    }
+    display: flex;
+    flex-direction: row;
 
-    .caixa1 {
-      background-color: white;
-      border-radius: 50px;
-      width: 270px;
-      height: 270px;
-      box-shadow: 2px 5px 19px -1px rgba(153,152,255,0.7);
-      -webkit-box-shadow: 2px 5px 19px -1px rgba(153,152,255,0.7);
-      -moz-box-shadow: 2px 5px 19px -1px rgba(153,152,255,0.7);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-right: 30px;
-  
-    }
+}
 
-    .img1 {
-      width: 190px;
-      height: 205px;
-    }
-  
+.caixa1 {
+    background-color: white;
+    border-radius: 50px;
+    width: 270px;
+    height: 270px;
+    box-shadow: 2px 5px 19px -1px rgba(153, 152, 255, 0.7);
+    -webkit-box-shadow: 2px 5px 19px -1px rgba(153, 152, 255, 0.7);
+    -moz-box-shadow: 2px 5px 19px -1px rgba(153, 152, 255, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 30px;
+
+}
+
+.img1 {
+    width: 190px;
+    height: 205px;
+}
+
 .info-texto {
-font-size: 16px;
-font-family: 'Font2';
-margin-top: -15px;
-color: black;
-text-decoration: none;
-font-family: 'Font2';
-font-weight: 650;
+    font-size: 16px;
+    font-family: 'Font2';
+    margin-top: -15px;
+    color: black;
+    text-decoration: none;
+    font-family: 'Font2';
+    font-weight: 650;
 }
 
 .info-subtexto {
-font-size: 15px;
-font-family: 'Font2';
-font-weight: 400;
-color: black;
-text-decoration: none;
-font-family: 'Font2';
-font-weight: 400;
+    font-size: 15px;
+    font-family: 'Font2';
+    font-weight: 400;
+    color: black;
+    text-decoration: none;
+    font-family: 'Font2';
+    font-weight: 400;
 }
 
 .img2 {
-width: 190px;
-height: 190px;
-margin-top: 15px;
+    width: 190px;
+    height: 190px;
+    margin-top: 15px;
 }
 
 .info-texto2 {
-font-size: 16px;
-font-family: 'Font2';
-margin-top: 8px;
-color: black;
-text-decoration: none;
-font-family: 'Font2';
-font-weight: 650;
+    font-size: 16px;
+    font-family: 'Font2';
+    margin-top: 8px;
+    color: black;
+    text-decoration: none;
+    font-family: 'Font2';
+    font-weight: 650;
 }
 
 .info-subtexto2 {
-font-size: 16px;
-font-family: 'Font2';
-font-weight: 400;
-color: black;
-text-decoration: none;
-font-family: 'Font2';
-font-weight: 400;
+    font-size: 16px;
+    font-family: 'Font2';
+    font-weight: 400;
+    color: black;
+    text-decoration: none;
+    font-family: 'Font2';
+    font-weight: 400;
 
 }
 
 .info-texto3 {
-font-size: 16px;
-font-family: 'Font2';
-margin-top: -15px;
-color: black;
-text-decoration: none;
-font-family: 'Font2';
-font-weight: 650;
+    font-size: 16px;
+    font-family: 'Font2';
+    margin-top: -15px;
+    color: black;
+    text-decoration: none;
+    font-family: 'Font2';
+    font-weight: 650;
 }
 
 .info-subtexto3 {
-font-size: 15px;
-font-family: 'Font2';
-font-weight: 400;
-color: black;
-text-decoration: none;
-font-family: 'Font2';
-font-weight: 400;
+    font-size: 15px;
+    font-family: 'Font2';
+    font-weight: 400;
+    color: black;
+    text-decoration: none;
+    font-family: 'Font2';
+    font-weight: 400;
 }
 
 .img3 {
-      width: 190px;
-      height: 205px;
-    }
+    width: 190px;
+    height: 205px;
+}
 
 .sidebar {
-    position: fixed;
     width: 70px;
     background-color: #6c63ff;
-    height: 540px;
+    height: 480px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 70px;
     border-radius: 40px;
-    margin-top: 100px;
-    
-  }
-  
-  .menu-item {
+
+}
+
+.tudo {
+    margin-left: 200px;
+    width: 1000px;
+    display: flex;
+    flex-direction: row;
+}
+
+.fixo {
+    position: fixed;
+    left: 20px;
+    top: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu-item {
     width: 50px;
     height: 50px;
     margin: 25px 0;
@@ -392,46 +416,68 @@ font-weight: 400;
     position: relative;
     cursor: pointer;
     outline: none;
-   
-  }
-  
-  .menu-item .icon {
+
+}
+
+.menu-item .icon {
     width: 100%;
     height: 100%;
     display: block;
     mask-size: cover;
     -webkit-mask-size: cover;
     background-color: white;
-  }
-  
-  /* Exemplo de ícones usando mask (ou pode usar SVG inline) */
-  .icon.home       { mask: url('img/home.png') no-repeat center; }
-  .icon.people   { mask: url('img/person.png') no-repeat center; }
-  .icon.docs        { mask: url('img/justificativas.png') no-repeat center; }
-  .icon.chapeu    { mask: url('img/chapeuzinho.png') no-repeat center; }
-  .icon.grafico      { mask: url('img/grafiquinho.png') no-repeat center; }
-  .icon.calendario     { mask: url('img/calendarinho.png') no-repeat center; }
-  .icon.mapa      { mask: url('img/mapinha.png') no-repeat center; }
-  /* Estado ativo (com "bolinha") */
-  
-  .icon-circle {
-    width: 50px;
-    height: 80px;
-    background-color: #4d47c3; /* roxo escuro */
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  .icon-circle img {
-    width: 25px;
-    height: 25px;
-  }
+}
 
-  .perfil-icon {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 20px;
+/* Exemplo de ícones usando mask (ou pode usar SVG inline) */
+.icon.home {
+    mask: url('img/home.png') no-repeat center;
+}
+
+.icon.people {
+    mask: url('/img/pessoinha.png') no-repeat center;
+}
+
+.icon.docs {
+    mask: url('img/justificativas.png') no-repeat center;
+}
+
+.icon.chapeu {
+    mask: url('img/chapeuzinho.png') no-repeat center;
+}
+
+.icon.grafico {
+    mask: url('img/grafiquinho.png') no-repeat center;
+}
+
+.icon.calendario {
+    mask: url('img/calendarinho.png') no-repeat center;
+}
+
+.icon.mapa {
+    mask: url('img/mapinha.png') no-repeat center;
+}
+
+/* Estado ativo (com "bolinha") */
+
+
+        .icon-circle {
+            width: 55px;
+            height: 60px;
+            background-color: #4d47c3;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .icon-circle img {
+            width: 30px;
+            height: 30px;
+        }
+
+.perfil-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
 }

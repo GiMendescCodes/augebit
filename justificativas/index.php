@@ -602,21 +602,11 @@ $result = $conn->query($sql);
         <div class="fixo">
             <img class="logo" src="./img/augebit.png" alt="">
             <div class="sidebar">
-                <a href="" class="menu-item">
-                    <span class="icon home"></span>
-                </a>
-                <div class="icon-circle">
-                    <img src="img/papelbranco.png" alt="">
-                </div>
-                <a href="cap.html" class="menu-item">
-                    <span class="icon cap"></span>
-                </a>
-                <a href="chart.html" class="menu-item">
-                    <span class="icon chart"></span>
-                </a>
-                <a href="phone.html" class="menu-item">
-                    <span class="icon phone"></span>
-                </a>
+                <a href="/augebit/FUNCIONARIO/inicial-funcionario/index.php" class="menu-item"><span class="icon home"></span> </a>
+                <div class="icon-circle"><img src="img/papelbranco.png" alt=""> </div>
+                <a href="/augebit/RH/desempenho-cursos/pagina_exibicao.php" class="menu-item"><span class="icon cap"></span></a>
+                <a href="chart.html" class="menu-item"><span class="icon chart"></span></a>
+                <a href="phone.html" class="menu-item"><span class="icon phone"></span></a>
             </div>
             <div class="perfil">
                 <a class="person" href=""></a>
@@ -626,13 +616,13 @@ $result = $conn->query($sql);
             <div class="main-content">
                 <div class="left-section">
                     <div class="header">
-                        <h1>Olá, Giovanna!</h1>
+                        <h1>Olá, <?= htmlspecialchars($funcionario['nome']) ?>!</h1>
                         <p>Acompanhe suas justificativas</p>
                     </div>
                     <div class="ladoalado">
                         <div class="history-section">
                             <div class="tituloH">
-                                <h2>Histórico de solicitações</h2>
+                                <h2>Histórico de justificativas</h2>
                             </div>
                             <div id="historico">
                                 <?php

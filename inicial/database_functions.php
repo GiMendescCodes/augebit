@@ -10,7 +10,7 @@ class DatabaseManager {
         $this->username = $username;
         $this->password = $password;
     }
-    
+
     // Conectar ao banco de dados
     private function connect($database) {
         try {
@@ -21,16 +21,54 @@ class DatabaseManager {
             throw new Exception("Erro na conexão com banco $database: " . $e->getMessage());
         }
     }
-    
-    // Buscar dados das solicitações (tabela 'dados')
-    public function getSolicitacoes() {
-        $pdo = $this->connect('solicitacoes');
-        $sql = "SELECT id, data_escolhida, opcao FROM dados ORDER BY data_escolhida DESC";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Buscar nome dos funcionários por ID com cache
+    private function buscarNomeFuncionario($pdo, $id, &$cache) {
+        if (!isset($cache[$id])) {
+            $stmt = $pdo->prepare("SELECT nome FROM funcionarios WHERE id = ?");
+            $stmt->execute([$id]);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            $cache[$id] = $resultado ? $resultado['nome'] : 'Funcionário não encontrado';
+        }
+        return $cache[$id];
     }
-    
+
+    // Buscar dados das solicitações (com nome)
+    public function getSolicitacoes() {
+        $pdoSolic = $this->connect('solicitacoes');
+        $pdoFunc = $this->connect('semestral');
+
+        $sql = "SELECT id, data_escolhida, opcao FROM dados ORDER BY data_escolhida DESC";
+        $stmt = $pdoSolic->prepare($sql);
+        $stmt->execute();
+        $solicitacoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $cacheNomes = [];
+        foreach ($solicitacoes as &$sol) {
+            $sol['nome'] = $this->buscarNomeFuncionario($pdoFunc, $sol['id'], $cacheNomes);
+        }
+
+        return $solicitacoes;
+    }
+
+    // Buscar dados das justificativas (com nome)
+    public function getJustificativas() {
+        $pdoJust = $this->connect('justificativas');
+        $pdoFunc = $this->connect('semestral');
+
+        $sql = "SELECT id, data_escolhida, opcao FROM justificativas ORDER BY data_escolhida DESC";
+        $stmt = $pdoJust->prepare($sql);
+        $stmt->execute();
+        $justificativas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $cacheNomes = [];
+        foreach ($justificativas as &$just) {
+            $just['nome'] = $this->buscarNomeFuncionario($pdoFunc, $just['id'], $cacheNomes);
+        }
+
+        return $justificativas;
+    }
+
     // Contar total de solicitações
     public function getTotalSolicitacoes() {
         $pdo = $this->connect('solicitacoes');
@@ -39,16 +77,7 @@ class DatabaseManager {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }
-    
-    // Buscar dados das justificativas
-    public function getJustificativas() {
-        $pdo = $this->connect('justificativas');
-        $sql = "SELECT id, data_escolhida, opcao FROM justificativas ORDER BY data_escolhida DESC";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    
+
     // Contar total de justificativas
     public function getTotalJustificativas() {
         $pdo = $this->connect('justificativas');
@@ -57,8 +86,8 @@ class DatabaseManager {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
     }
-    
-    // Buscar dados recentes (últimos registros)
+
+    // Buscar dados recentes (últimos registros de solicitações)
     public function getRecentSolicitacoes($limit = 2) {
         $pdo = $this->connect('solicitacoes');
         $sql = "SELECT id, data_escolhida, opcao FROM dados ORDER BY data_escolhida DESC LIMIT :limit";
@@ -67,7 +96,8 @@ class DatabaseManager {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
+    // Buscar dados recentes (últimos registros de justificativas)
     public function getRecentJustificativas($limit = 2) {
         $pdo = $this->connect('justificativas');
         $sql = "SELECT id, data_escolhida, opcao FROM justificativas ORDER BY data_escolhida DESC LIMIT :limit";
@@ -80,45 +110,22 @@ class DatabaseManager {
 
 // Funções auxiliares
 class HelperFunctions {
-    // Formatar data para exibição
     public static function formatarData($data) {
         $timestamp = strtotime($data);
         return date('d/m', $timestamp);
     }
-    
-    // Formatar data completa
+
     public static function formatarDataCompleta($data) {
         $timestamp = strtotime($data);
         return date('d/m/Y', $timestamp);
     }
-    
-    // Escapar HTML para segurança
+
     public static function escapeHtml($string) {
         return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
     }
-    
-    // Formatar número com zeros à esquerda
+
     public static function formatarNumero($numero, $digitos = 2) {
         return sprintf('%0' . $digitos . 'd', $numero);
     }
 }
-
-// Exemplo de uso da classe
-/*
-try {
-    $db = new DatabaseManager('localhost', 'seu_usuario', 'sua_senha');
-    
-    $solicitacoes = $db->getSolicitacoes();
-    $total_solicitacoes = $db->getTotalSolicitacoes();
-    
-    $justificativas = $db->getJustificativas();
-    $total_justificativas = $db->getTotalJustificativas();
-    
-    echo "Total de solicitações: " . $total_solicitacoes;
-    echo "Total de justificativas: " . $total_justificativas;
-    
-} catch (Exception $e) {
-    echo "Erro: " . $e->getMessage();
-}
-*/
 ?>

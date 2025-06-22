@@ -582,12 +582,12 @@ $result = $conn->query($sql);
     <div class="fixo">
         <img class="logo" src="./img/augebit.png" alt="">
         <div class="sidebar">
-            <a href="" class="menu-item"><span class="icon home"></span></a>
-            <a href="" class="menu-item"><span class="icon people"></span></a>
-            <a href="" class="menu-item"><span class="icon docs"></span></a>
-            <a href="" class="Home icon"><span class="icon heat"></span></a>
-            <a href="" class="menu-item"><span class="icon grafico"></span></a>
-            <a href="" class="icon-circle"> <img src="img/calendarioBranco.png" alt=""> </a>
+            <a href="/augebit/inicial/index.php" class="menu-item"><span class="icon home"></span></a>
+            <a href="/augebit/RH/gerenciamento-funcionarios/index.php" class="menu-item"><span class="icon people"></span></a>
+            <a href="/augebit/justificativas/verificar.php" class="menu-item"><span class="icon docs"></span></a>
+            <a href="/augebit/RH/desempenho-cursos/index.php" class="Home icon"><span class="icon heat"></span></a>
+            <a href="/augebit/desempenho/index.php" class="menu-item"><span class="icon grafico"></span></a>
+            <a href="/augebit/solicitacoes/verificar.php" class="icon-circle"> <img src="img/calendarioBranco.png" alt=""> </a>
         </div>
     </div>
     </div>

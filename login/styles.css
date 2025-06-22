@@ -11,11 +11,7 @@
 }
 
 body {
-<<<<<<< HEAD
     background: linear-gradient(135deg, #8B7CF6 0%, #A78BFA 100%);
-=======
-    background: #9998FF;
->>>>>>> b26db88 (up)
     min-height: 100vh;
     overflow-x: hidden;
     font-family: 'Font1';
@@ -101,13 +97,8 @@ body {
     background: #F1F3FF;
     border-radius: 16px;
     padding: 0 20px;
-<<<<<<< HEAD
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-=======
-    transition: all 0.3s ease;
-    
->>>>>>> b26db88 (up)
 }
 
 .input-wrapper:focus-within {
@@ -217,24 +208,12 @@ body {
     border: none;
     border-radius: 16px;
     padding: 20px;
-<<<<<<< HEAD
     font-size: 18px;
     font-weight: 600;
-=======
-    font-size: 40px;
-    height: 53px;
->>>>>>> b26db88 (up)
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
     margin-top: 10px;
-<<<<<<< HEAD
-=======
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'fonte1' sans-serif;
->>>>>>> b26db88 (up)
 }
 
 .login-button:hover {

@@ -19,7 +19,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #8B7CF6;
+    background: #9998FF;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -81,9 +81,11 @@ body {
 
 .question {
     text-align: center;
-    font-size: 16px;
-    color: #8B7CF6;
+    font-size: 20px;
+    color: #9998FF;
     margin-bottom: 24px;
+    font-family: 'font2', sans-serif;
+    font-weight: bold;
 }
 
 .buttons-container {

@@ -1,19 +1,22 @@
 <?php
-// Configurações de conexão com o banco de dados
 $host = 'localhost';
-$username = 'root'; // Altere conforme sua configuração
-$password = '';     // Altere conforme sua configuração
+$username = 'root';
+$password = '';
 
-// Conexão com o banco 'semestral'
 try {
     $pdo = new PDO("mysql:host=$host;dbname=semestral;charset=utf8", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
+} catch (PDOException $e) {
     die("Erro na conexão com banco semestral: " . $e->getMessage());
 }
 
-// Buscar dados da tabela solicitacoes
-$sql_solicitacoes = "SELECT id, data_escolhida, opcao FROM solicitacoes ORDER BY data_escolhida DESC";
+// Buscar solicitações + nome
+$sql_solicitacoes = "
+    SELECT s.id, s.data_escolhida, s.opcao, f.nome 
+    FROM solicitacoes s 
+    LEFT JOIN funcionarios f ON s.id = f.id 
+    ORDER BY s.data_escolhida DESC
+";
 $stmt_solicitacoes = $pdo->prepare($sql_solicitacoes);
 $stmt_solicitacoes->execute();
 $solicitacoes = $stmt_solicitacoes->fetchAll(PDO::FETCH_ASSOC);
@@ -24,8 +27,13 @@ $stmt_count_solicitacoes = $pdo->prepare($sql_count_solicitacoes);
 $stmt_count_solicitacoes->execute();
 $total_solicitacoes = $stmt_count_solicitacoes->fetch(PDO::FETCH_ASSOC)['total'];
 
-// Buscar dados da tabela justificativas
-$sql_justificativas = "SELECT id, data_escolhida, opcao FROM justificativas ORDER BY data_escolhida DESC";
+// Buscar justificativas + nome
+$sql_justificativas = "
+    SELECT j.id, j.data_escolhida, j.opcao, f.nome 
+    FROM justificativas j 
+    LEFT JOIN funcionarios f ON j.id = f.id 
+    ORDER BY j.data_escolhida DESC
+";
 $stmt_justificativas = $pdo->prepare($sql_justificativas);
 $stmt_justificativas->execute();
 $justificativas = $stmt_justificativas->fetchAll(PDO::FETCH_ASSOC);
@@ -37,94 +45,76 @@ $stmt_count_justificativas->execute();
 $total_justificativas = $stmt_count_justificativas->fetch(PDO::FETCH_ASSOC)['total'];
 
 // Função para formatar data
-function formatarData($data) {
+function formatarData($data)
+{
     $timestamp = strtotime($data);
     return date('d/m', $timestamp);
 }
 ?>
 
 
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Augebit</title>
-  <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Augebit</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     </div>
-  </div>
+    </div>
 
-          <div class="sidebar">
-                <div class="icon-circle">
-          <img src="img/home.png" alt="Home icon">
+    <div class="fixo">
+        <img class="logo" src="./img/augebit.png" alt="">
+        <div class="sidebar">
+            <a href="" class="icon-circle"><img src="img\home.png" alt=""></a>
+            <a href="/augebit/RH/gerenciamento-funcionarios" class="menu-item"><span class="icon people"></span></a>
+            <a href="/augebit/justificativas/verificar.php" class="menu-item"><span class="icon docs"></span></a>
+            <a href="/augebit/RH\desempenho-cursos/index.php" class="menu-item"><span class="icon chapeu"></span></a>
+            <a href="/augebit/desempenho/index.php" class="menu-item"><span class="icon grafico"></span></a>
+            <a href="/augebit/solicitacoes/verificar.php" class="menu-item"><span class="icon calendario"></span> </a>
         </div>
-        <a href="img/person.png" class="menu-item">
-          <span class="icon people"></span>
-        </a>
-        <a href="img/justificativas.png" class="menu-item">
-          <span class="icon docs"></span>
-        </a>
-        <a href="img/chapeuzinho.png" class="menu-item">
-          <span class="icon chapeu"></span>
-        </a>
-        <a href="img/grafiquinho.png" class="menu-item">
-          <span class="icon grafico"></span>
-        </a>
-        <a href="img/calendarinho.png" class="menu-item">
-          <span class="icon calendario"></span>
-        </a>
-        <a href="img/mapinha.png" class="menu-item">
-          <span class="icon mapa"></span>
-        </a>
-      </div>
-
-        <div class="perfil">
-        <a class="person" href="img/person.png"></a>
-      </div>
-
-    <!-- Main Content -->
-    <div class="main">
-        <!-- Header -->
-        <div class="header">
-            <div class="logo-container">
-                <img src="img/augebit.png" alt="">
-                <div class="title-text">
-                    <h1>Olá, Jorge</h1>
-                    <p>Gerencie o perfil e acesso dos funcionários ao site aqui</p>
-                </div>
+    </div>
+    <div class="tudo">
+        <div class="tituloInicial">
+            <div class="title-text">
+                <h1 class="titulo">Central de Recursos Humanos</h1>
+                <p class="subtitulo">Gerencie o perfil e acesso dos funcionários ao site aqui</p>
             </div>
         </div>
 
         <!-- Cards -->
         <div class="cards-container">
-<div class="part1">
-                  <div class="caixa1">
+            <div class="part1">
+                <div class="caixa1">
                     <img class="img1" src="img/solicitaçoes.png" alt="">
                     <div class="textinhos">
-                    <a class="info-texto" href="">Solicitações</a>
-                    <br>
-                    <a class="info-subtexto" href="">Solicitar férias, folgas, etc</a>
+                        <a class="info-texto" href="">Solicitações</a>
+                        <br>
+                        <a class="info-subtexto" href="">Solicitar férias, folgas, etc</a>
                     </div>
+                </div>
+                <div class="caixa1">
+                    <img class="img2" src="img/cursos.png" alt="">
+                    <div class="textinhos">
+                        <a class="info-texto2" href="">Cursos</a>
+                        <br>
+                        <a class="info-subtexto2" href="">Desempenho nos cursos</a>
                     </div>
-                    <div class="caixa1">
-                      <img class="img2" src="img/cursos.png" alt="">
-                      <div class="textinhos">
-                      <a class="info-texto2" href="">Cursos</a>
-                      <br>
-                      <a class="info-subtexto2" href="">Desempenho nos cursos</a>
+                </div>
+                <div class="caixa1">
+                    <img class="img3" src="img/justificativa.png" alt="">
+                    <div class="textinhos">
+                        <a class="info-texto3" href="">Justificativa</a>
+                        <br>
+                        <a class="info-subtexto3" href="">Justifique atrasos, faltas, etc</a>
                     </div>
-               </div>
-               <div class="caixa1">
-                <img class="img3" src="img/justificativa.png" alt="">
-                <div class="textinhos">
-                  <a class="info-texto3" href="">Justificativa</a>
-                  <br>
-                <a class="info-subtexto3" href="">Justifique atrasos, faltas, etc</a>
-              </div>
+                </div>
             </div>
-  </div>
             <div class="empty-card">
                 <button class="add-button">+</button>
             </div>
@@ -144,7 +134,7 @@ function formatarData($data) {
                                             <path d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-6.1 0-10 4-10 10h20c0-6-3.9-10-10-10z"></path>
                                         </svg>
                                     </div>
-                                    <div class="user-name">ID: <?php echo htmlspecialchars($solicitacao['id']); ?></div>
+                                    <div class="user-name"><?php echo htmlspecialchars($solicitacao['nome']); ?></div>
                                 </div>
                                 <div class="request-badge"><?php echo htmlspecialchars($solicitacao['opcao']); ?></div>
                                 <div class="request-date"><?php echo formatarData($solicitacao['data_escolhida']); ?></div>
@@ -159,7 +149,7 @@ function formatarData($data) {
                     <?php endif; ?>
                     <div class="count-badge"><?php echo sprintf('%02d', $total_solicitacoes); ?></div>
                 </div>
-                
+
                 <div class="section">
                     <h2 class="section-title">Justificativas</h2>
                     <?php if (!empty($justificativas)): ?>
@@ -171,7 +161,7 @@ function formatarData($data) {
                                             <path d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-6.1 0-10 4-10 10h20c0-6-3.9-10-10-10z"></path>
                                         </svg>
                                     </div>
-                                    <div class="user-name">ID: <?php echo htmlspecialchars($justificativa['id']); ?></div>
+                                    <div class="user-name"><?php echo htmlspecialchars($justificativa['nome']); ?></div>
                                 </div>
                                 <div class="request-badge"><?php echo htmlspecialchars($justificativa['opcao']); ?></div>
                                 <div class="request-date"><?php echo formatarData($justificativa['data_escolhida']); ?></div>
@@ -187,7 +177,7 @@ function formatarData($data) {
                     <div class="count-badge"><?php echo sprintf('%02d', $total_justificativas); ?></div>
                 </div>
             </div>
-            
+
             <div>
                 <div class="section stats-card">
                     <div class="stats-info">
@@ -198,7 +188,7 @@ function formatarData($data) {
                         <img src="img/icon.png" viewBox="0 0 24 24" fill="#6c63ff" width="75" height="75">
                     </div>
                 </div>
-                
+
                 <div class="section stats-card">
                     <div class="stats-info">
                         <div class="stats-number">8</div>
@@ -211,6 +201,6 @@ function formatarData($data) {
             </div>
         </div>
     </div>
-    
-  </body>
-  </html>
+</body>
+
+</html>

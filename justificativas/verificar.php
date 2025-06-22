@@ -28,9 +28,11 @@ if (isset($_GET['acao'], $_GET['id']) && $_GET['acao'] === 'status') {
 
 // Upload do arquivo enviado (POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['arquivo'])) {
+    session_start();
     $mensagem = $_POST['mensagem'] ?? null;
     $dataEscolhida = $_POST['data_escolhida'] ?? date('Y-m-d');
     $opcao = $_POST['opcao'] ?? '';
+    $funcionario_id = $_SESSION['funcionario_id'] ?? null; // Usa o ID da sessão do funcionário logado
 
     $arquivo = $_FILES['arquivo'];
 
@@ -44,8 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['arquivo'])) {
         $novoCaminho = $uploadDir . uniqid() . "_" . $nomeArquivo;
 
         if (move_uploaded_file($arquivo['tmp_name'], $novoCaminho)) {
-            $stmt = $conn->prepare("INSERT INTO justificativas (data_escolhida, opcao, arquivo, mensagem, status) VALUES (?, ?, ?, ?, 'pendente')");
-            $stmt->bind_param('ssss', $dataEscolhida, $opcao, $novoCaminho, $mensagem);
+            $stmt = $conn->prepare("INSERT INTO justificativas (data_escolhida, opcao, arquivo, mensagem, status, funcionario_id) VALUES (?, ?, ?, ?, 'pendente', ?)");
+            $stmt->bind_param('ssssi', $dataEscolhida, $opcao, $novoCaminho, $mensagem, $funcionario_id);
 
             if ($stmt->execute()) {
                 $stmt->close();
@@ -97,8 +99,14 @@ if (isset($_GET['acao'], $_GET['id'])) {
     exit;
 }
 
-// Listar justificativas
-$sql = "SELECT id, data_escolhida, opcao, data_envio, arquivo, mensagem, status FROM justificativas ORDER BY id DESC";
+// Listar justificativas com nome do funcionário usando LEFT JOIN para não perder registros sem funcionário
+$sql = "
+    SELECT j.id, j.data_escolhida, j.opcao, j.data_envio, j.arquivo, j.mensagem, j.status,
+           f.nome AS nome_funcionario
+    FROM justificativas j
+    LEFT JOIN funcionarios f ON j.funcionario_id = f.id
+    ORDER BY j.id DESC
+";
 $result = $conn->query($sql);
 
 // Contar justificativas pendentes
@@ -165,7 +173,7 @@ $pendingCount = $countResult ? $countResult->fetch_assoc()['total'] : 0;
         .sidebar {
             width: 70px;
             background-color: #6c63ff;
-            height: 480px;
+            height: 530px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -175,7 +183,7 @@ $pendingCount = $countResult ? $countResult->fetch_assoc()['total'] : 0;
         .menu-item {
             width: 50px;
             height: 50px;
-            margin: 25px 0;
+            margin: 20px 0;
             background: none;
             border: none;
             position: relative;
@@ -197,7 +205,7 @@ $pendingCount = $countResult ? $countResult->fetch_assoc()['total'] : 0;
         }
 
         .icon.people {
-            mask: url('./img/ph_person-thin.png') no-repeat center;
+            mask: url('./img/people.png') no-repeat center;
         }
 
         .icon.docs {
@@ -218,19 +226,22 @@ $pendingCount = $countResult ? $countResult->fetch_assoc()['total'] : 0;
 
         .icon-circle {
             width: 55px;
-            height: 60px;
+            aspect-ratio: 1 / 1;
             background-color: #4d47c3;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 10px;
+            margin: 10px auto;
         }
 
         .icon-circle img {
             width: 30px;
             height: 30px;
+            object-fit: contain;
         }
+
+
 
         .logo {
             width: 120px;
@@ -266,9 +277,11 @@ $pendingCount = $countResult ? $countResult->fetch_assoc()['total'] : 0;
             margin-bottom: 40px;
         }
 
+
         .carousel-wrapper {
             display: flex;
             transition: transform 0.5s ease-in-out;
+            width: calc(710px * 4);
         }
 
         .carousel-container {
@@ -591,12 +604,12 @@ $pendingCount = $countResult ? $countResult->fetch_assoc()['total'] : 0;
     <div class="fixo">
         <img class="logo" src="./img/augebit.png" alt="">
         <div class="sidebar">
-            <a href="" class="menu-item"><span class="icon home"></span></a>
-            <a href="" class="menu-item"><span class="icon people"></span></a>
-            <a href="" class="menu-item"><span class="icon docs"></span></a>
-            <a href="" class="menu-item"><span class="icon chapeu"></span></a>
-            <a href="" class="menu-item"><span class="icon grafico"></span></a>
-            <a href="" class="icon-circle"> <img src="img/calendarioBranco.png" alt=""> </a>
+            <a href="/augebit/inicial/index.php" class="menu-item"><span class="icon home"></span></a>
+            <a href="/augebit/RH/gerenciamento-funcionarios/index.php" class="menu-item"><span class="icon people"></span></a>
+            <a href="" class="icon-circle"><img src="img/papelbranco.png" alt=""></a>
+            <a href="/augebit/RH/desempenho-cursos/index.php" class="menu-item"><span class="icon chapeu"></span></a>
+            <a href="/augebit/desempenho/index.php" class="menu-item"><span class="icon grafico"></span></a>
+            <a href="/augebit/solicitacoes/verificar.php" class="menu-item"> <span class="icon calendario"></span></a>
         </div>
     </div>
 
@@ -701,35 +714,37 @@ $pendingCount = $countResult ? $countResult->fetch_assoc()['total'] : 0;
                 </div>
 
                 <!-- Painel Principal -->
+                <!-- Painel Principal -->
                 <div class="main-panel">
                     <div class="panel-content">
                         <?php
                         if ($result && $result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 $cardId = "card_" . $row['id'];
-                                
-                                // Criar nome fictício baseado no ID ou usar apenas "Nome Sobrenome"
-                                $nomes = ["João Silva", "Maria Santos", "Pedro Costa", "Ana Oliveira", "Carlos Souza", "Luciana Ferreira"];
-                                $nomeIndex = $row['id'] % count($nomes);
-                                $nome = $nomes[$nomeIndex];
-                                
-                                // Criar iniciais para o avatar
-                                $iniciais = strtoupper(substr($nome, 0, 1) . substr(strrchr($nome, ' '), 1, 1));
+
+                                $nome = $row['nome_funcionario'] ?? 'Funcionário desconhecido';
+
+                                // Criar iniciais para o avatar com cuidado para nomes incompletos
+                                if (strpos($nome, ' ') !== false) {
+                                    $iniciais = strtoupper(substr($nome, 0, 1) . substr(strrchr($nome, ' '), 1, 1));
+                                } else {
+                                    $iniciais = strtoupper(substr($nome, 0, 2));
+                                }
 
                                 echo "<div class='solicitation-card' id='$cardId'>";
                                 echo "<div class='card-header'>";
                                 echo "<div class='employee-avatar'>$iniciais</div>";
                                 echo "<div class='divRoxo'></div>";
                                 echo "<div class='employee-info'>";
-                                echo "<div class='employee-name'>$nome</div>";
+                                echo "<div class='employee-name'>" . htmlspecialchars($nome) . "</div>";
                                 echo "</div>";
                                 echo "<div class='request-type'>" . htmlspecialchars($row['opcao'] ?? 'Justificativa') . "</div>";
                                 echo "<div class='request-date'>" . date('d/m/Y', strtotime($row['data_escolhida'])) . "</div>";
                                 echo "</div>";
 
                                 echo "<div class='card-content-text'>";
-                                echo htmlspecialchars($row['mensagem'] ?? 'Lorem ipsum dolor sit amet consectetur. Proin consequat elit enim vitae. Ut mauris auctor mauris posuere amet morbi tempus volutpat. Nullam rhoncus ornare id nisl. A facilisis arcu eget augue. Lorem ipsum dolor sit amet consectetur. Proin consequat elit enim vitae. Ut mauris auctor mauris posuere amet morbi tempus volutpat. Nullam rhoncus ornare id nisl. A facilisis arcu eget augue Lorem ipsum dolor sit amet consectetur. Proin consequat elit enim vitae. Ut mauris auctor mauris posuere amet morbi tempus volutpat.');
-                                
+                                echo nl2br(htmlspecialchars($row['mensagem'] ?? 'Sem mensagem'));
+
                                 if (!empty($row['arquivo'])) {
                                     echo "<br><br><strong>Arquivo anexado:</strong> ";
                                     echo "<a href='" . htmlspecialchars($row['arquivo']) . "' target='_blank' class='download-link'>DOCUMENTO(PDF)</a>";
@@ -744,7 +759,7 @@ $pendingCount = $countResult ? $countResult->fetch_assoc()['total'] : 0;
                                 } else {
                                     echo "<div class='card-actions'>";
                                     echo "<div style='padding: 10px 20px; background: #FFFFFF; color: #9998FF; border-radius: 20px; font-weight: 600;'>";
-                                    echo "Status: " . ucfirst($row['status']);
+                                    echo "Status: " . ucfirst(htmlspecialchars($row['status']));
                                     echo "</div>";
                                     echo "</div>";
                                 }
@@ -769,7 +784,10 @@ $pendingCount = $countResult ? $countResult->fetch_assoc()['total'] : 0;
 
         function updateCarousel() {
             const slideWidth = 710;
-            const carousel = document.getElementById('carousel');
+            const carousel = document.getElementById("carousel");
+
+            const cards = carousel.querySelectorAll(".carousel-card");
+            carousel.style.width = `${cards.length * slideWidth}px`;
 
             const offset = currentSlide * slideWidth;
             carousel.style.transform = `translateX(-${offset}px)`;
@@ -789,16 +807,27 @@ $pendingCount = $countResult ? $countResult->fetch_assoc()['total'] : 0;
             updateCarousel();
         }
 
-        // Auto-advance
-        setInterval(nextSlide, 5000);
+        // Função para configurar eventos depois que o DOM estiver carregado
+        function setupCarousel() {
+            // Inicializa a posição do carousel
+            updateCarousel();
 
-        // Make dots clickable
-        document.querySelectorAll('.dot').forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                currentSlide = index;
-                updateCarousel();
+            // Auto-advance
+            setInterval(nextSlide, 5000);
+
+            // Tornar os dots clicáveis
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentSlide = index;
+                    updateCarousel();
+                });
             });
-        });
+        }
+
+        // Executar setup após o DOM estar pronto
+        document.addEventListener('DOMContentLoaded', setupCarousel);
+
+        // Suas funções adicionais permanecem iguais
 
         function processarAcao(acao, id, cardId) {
             if (!confirm('Tem certeza que deseja ' + acao + ' esta justificativa?')) return;
@@ -821,4 +850,19 @@ $pendingCount = $countResult ? $countResult->fetch_assoc()['total'] : 0;
             fetch('?acao=status&id=' + id)
                 .then(res => res.json())
                 .then(data => {
-                    
+                    const card = document.getElementById(`card-${id}`);
+                    if (card && data.status) {
+                        card.classList.remove('pendente', 'aprovado', 'rejeitado');
+                        card.classList.add(data.status);
+
+                        const statusText = card.querySelector('.status-text');
+                        if (statusText) {
+                            statusText.textContent = data.status.charAt(0).toUpperCase() + data.status.slice(1);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao atualizar status do card:', error);
+                });
+        }
+    </script>

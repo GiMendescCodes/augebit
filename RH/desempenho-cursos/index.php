@@ -4,12 +4,14 @@ include '../../conexao.php';
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Augebit</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div class="comeco">
     <img class="logo" src="./img/augebit.png" alt="">
@@ -22,31 +24,28 @@ include '../../conexao.php';
   <div class="tudo">
     <div class="tudo1">
       <div class="sidebar">
-        <a href="" class="menu-item"><span class="icon home"></span></a>
+        <a href="/augebit/inicial/index.php" class="menu-item"><span class="icon home"></span></a>
         <a href="/augebit/RH/gerenciamento-funcionarios/index.php" class="menu-item"><span class="icon people"></span></a>
-        <a href="" class="menu-item"><span class="icon docs"></span></a>
+        <a href="/augebit/justificativas/verificar.php" class="menu-item"><span class="icon docs"></span></a>
         <div class="icon-circle"><img src="img/chapeuu.png" alt="Home icon"></div>
-        <a href="" class="menu-item"><span class="icon grafico"></span></a>
-        <a href="" class="menu-item"><span class="icon calendario"></span></a>
-      </div>
-      <div class="perfil">
-        <a class="person" href=""></a>
+        <a href="/augebit/desempenho/index.php" class="menu-item"><span class="icon grafico"></span></a>
+        <a href="/augebit/solicitacoes/verificar.php" class="menu-item"><span class="icon calendario"></span></a>
       </div>
     </div>
 
     <form action="salvar_dados.php" method="POST">
-    
+
       <div class="informacoes">
         <input type="text" class="section-title-input" name="titulo_secao1" value="Cursos concluídos e seus resultados:">
         <input type="text" class="course-title-input" name="curso1" value="Design de Equipamentos Industriais">
         <div class="search-field">
-        <input type="text" class="search-input" placeholder="Digite o nome do funcionário aqui..." id="funcionarioInput" name="nome_funcionario" >
-        <div class="search-icon">
+          <input type="text" class="search-input" placeholder="Digite o nome do funcionário aqui..." id="funcionarioInput" name="nome_funcionario">
+          <div class="search-icon">
             <svg fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
             </svg>
+          </div>
         </div>
-    </div>
         <div class="completed-section">
           <div class="section1">
             <div class="progress-circle">
@@ -171,4 +170,5 @@ include '../../conexao.php';
     <script src="script.js"></script>
   </div>
 </body>
+
 </html>
