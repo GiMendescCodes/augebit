@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Desempenho Profissional</title>
     <style>
-         @font-face {
+        @font-face {
             font-family: 'fonte1';
             src: url('../fontes/eurostile.TTF');
         }
@@ -20,6 +20,7 @@
             font-family: 'fonte3';
             src: url('../fontes/MontserratAlternates-Regular.ttf');
         }
+
         * {
             margin: 0;
             padding: 0;
@@ -177,12 +178,14 @@
             color: #2c3e50;
             font-weight: 600;
         }
+
         .form-group img,
         .form-group img {
             width: 32px;
             height: 32px;
             margin-bottom: -8px;
         }
+
         .form-group input,
         .form-group select {
             width: 100%;
@@ -430,51 +433,64 @@
         }
 
         .chart-container {
-            background: #9998FF;
-            border-radius: 15px;
-            padding: 20px;
+            background: #F8F7FF;
+            border: 2px solid #9998FF;
+            border-radius: 30px;
+            padding: 30px;
             margin-bottom: 25px;
-
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(153, 152, 255, 0.5);
         }
 
         .chart-title {
-            text-align: center;
-            color: #2c3e50;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
             margin-bottom: 20px;
         }
 
         .chart {
             display: flex;
             align-items: flex-end;
-            justify-content: center;
-            gap: 8px;
+            gap: 12px;
             height: 120px;
             margin-bottom: 10px;
         }
 
         .chart-bar {
-            width: 20px;
-            border-radius: 4px 4px 0 0;
-            transition: all 0.3s ease;
+            width: 25px;
+            border-radius: 8px 8px 0 0;
+            background: rgba(153, 152, 255, 0.6);
+            transition: transform 0.3s ease;
         }
 
         .chart-bar:hover {
-            transform: translateY(-2px);
+            transform: translateY(-5px);
         }
 
         .chart-labels {
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 12px;
+            font-size: 12px;
+            color: #555;
         }
 
         .chart-label {
-            width: 20px;
+            width: 25px;
             text-align: center;
-            font-size: 10px;
-            color: #7f8c8d;
         }
+
+        .chart-right-text {
+            max-width: 180px;
+            font-size: 12px;
+            color: #7B61FF;
+            text-align: right;
+            padding-left: 20px;
+        }
+
 
         .summary-section {
             background: rgba(102, 126, 234, 0.05);
@@ -689,7 +705,7 @@
                 </div>
 
                 <div class="resume-section">
-                    <label><img src="resumoIcon" alt=""> Resumo de Avaliação</label>
+                    <label><img src="resumoIcon.png" alt=""> Resumo de Avaliação</label>
                     <textarea id="evaluationSummary" placeholder="Digite o resumo da avaliação aqui..."></textarea>
                 </div>
 
@@ -703,238 +719,233 @@
         </div>
     </div>
 
-    <script>
-        let evaluations = [];
+  <script>
+    let evaluations = [];
 
-        function getScoreColor(score) {
-            if (score <= 5) return 'yellow';
-            if (score <= 8) return 'blue';
-            return 'green';
+    function getScoreColor(score) {
+        if (score <= 5) return 'yellow';
+        if (score <= 8) return 'blue';
+        return 'green';
+    }
+
+    function getPerformanceLevel(score) {
+        if (score >= 8.5) return { level: 'Desempenho excelente', class: 'excellent' };
+        if (score >= 7) return { level: 'Desempenho bom', class: 'good' };
+        return { level: 'Desempenho médio', class: 'average' };
+    }
+
+    function updateCalculations() {
+        const criteria = ['pontualidade', 'prazos', 'qualidade', 'equipe', 'comunicacao', 'proatividade', 'problemas'];
+        let totalWeight = 0;
+        let totalResult = 0;
+
+        criteria.forEach(criterion => {
+            const weight = parseFloat(document.querySelector(`input[data-criteria="${criterion}"].weight-input`).value) || 0;
+            const score = parseFloat(document.querySelector(`input[data-criteria="${criterion}"].score-input`).value) || 0;
+            const result = weight * score;
+
+            document.querySelector(`td[data-criteria="${criterion}"]`).textContent = result.toFixed(1);
+            totalWeight += weight;
+            totalResult += result;
+        });
+
+        document.getElementById('totalWeight').textContent = totalWeight;
+        document.getElementById('totalResult').textContent = totalResult.toFixed(1);
+    }
+
+    function createChart(data) {
+        const maxScore = Math.max(...data.map(d => d.score));
+        return data.map((d, i) => {
+            const height = (d.score / 10) * 100;
+            const isLast = i === data.length - 1;
+            const color = isLast ? '#9998FF' : 'rgba(153, 152, 255, 0.6)';
+            return `
+                <div class="chart-bar" 
+                     style="height: ${height}px; background: ${color};" 
+                     title="${d.month}: ${d.score}"></div>
+            `;
+        }).join('');
+    }
+
+    function createChartLabels(data) {
+        return data.map(d => `<div class="chart-label">${d.month}</div>`).join('');
+    }
+
+    function renderEvaluations() {
+        const container = document.getElementById('evaluationsList');
+
+        if (evaluations.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: #7f8c8d; font-size: 18px;">Nenhuma avaliação encontrada.</p>';
+            return;
         }
 
-        function getPerformanceLevel(score) {
-            if (score >= 8.5) return { level: 'Desempenho excelente', class: 'excellent' };
-            if (score >= 7) return { level: 'Desempenho bom', class: 'good' };
-            return { level: 'Desempenho médio', class: 'average' };
-        }
+        const sortedEvaluations = evaluations
+            .slice()
+            .sort((a, b) => new Date(a.month) - new Date(b.month));
 
-        function updateCalculations() {
-            const criteria = ['pontualidade', 'prazos', 'qualidade', 'equipe', 'comunicacao', 'proatividade', 'problemas'];
-            let totalWeight = 0;
-            let totalResult = 0;
+        return container.innerHTML = sortedEvaluations.map((evaluation, idx) => {
+            const performance = getPerformanceLevel(evaluation.average);
 
-            criteria.forEach(criterion => {
-                const weight = parseFloat(document.querySelector(`input[data-criteria="${criterion}"].weight-input`).value) || 0;
-                const score = parseFloat(document.querySelector(`input[data-criteria="${criterion}"].score-input`).value) || 0;
-                const result = weight * score;
+            // Dados do gráfico (últimas 6 avaliações até a atual)
+            const lastSix = sortedEvaluations
+                .filter(e => e.name === evaluation.name)
+                .slice(Math.max(0, idx - 5), idx + 1);
 
-                document.querySelector(`td[data-criteria="${criterion}"]`).textContent = result.toFixed(1);
-                totalWeight += weight;
-                totalResult += result;
-            });
+            const chartData = lastSix.map(e => ({
+                month: new Date(e.month).toLocaleDateString('pt-BR', { month: 'short' }),
+                score: e.average
+            }));
 
-            document.getElementById('totalWeight').textContent = totalWeight;
-            document.getElementById('totalResult').textContent = totalResult.toFixed(1);
-        }
-
-        function createChart(data) {
-            const maxScore = Math.max(...data.map(d => d.score));
-            return data.map(d => {
-                const height = (d.score / 10) * 100;
-                const color = getScoreColor(d.score);
-                return `
-                    <div class="chart-bar score-fill ${color}" 
-                         style="height: ${height}px;" 
-                         title="${d.month}: ${d.score}"></div>
-                `;
-            }).join('');
-        }
-
-        function createChartLabels(data) {
-            return data.map(d => `<div class="chart-label">${d.month}</div>`).join('');
-        }
-
-        function renderEvaluations() {
-            const container = document.getElementById('evaluationsList');
-
-            if (evaluations.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: #7f8c8d; font-size: 18px;">Nenhuma avaliação encontrada.</p>';
-                return;
-            }
-
-            container.innerHTML = evaluations.map((evaluation, index) => {
-                const performance = getPerformanceLevel(evaluation.average);
-                const chartData = evaluations.slice(Math.max(0, index - 5), index + 1).map((e, i) => ({
-                    month: new Date(e.month).toLocaleDateString('pt-BR', { month: 'short' }),
-                    score: e.average
-                }));
-
-                return `
-                    <div class="evaluation-card">
-                        <div class="card-header">
-                            <div class="employee-name">Desempenho de ${evaluation.name}!</div>
-                            <div class="evaluation-date">${new Date(evaluation.month).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</div>
-                        </div>
-                        
-                        <div class="card-content">
-                            <div class="left-content">
-                                <h4 style="margin-bottom: 20px; color: #2c3e50;">Seu desempenho em ${new Date(evaluation.month).toLocaleDateString('pt-BR', { month: 'long' })}:</h4>
-                                
-                                <div class="performance-table">
-                                    <table>
-                                        <thead>
+            return `
+                <div class="evaluation-card">
+                    <div class="card-header">
+                        <div class="employee-name">Desempenho de ${evaluation.name}!</div>
+                        <div class="evaluation-date">${new Date(evaluation.month).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</div>
+                    </div>
+                    
+                    <div class="card-content">
+                        <div class="left-content">
+                            <h4 style="margin-bottom: 20px; color: #2c3e50;">Seu desempenho em ${new Date(evaluation.month).toLocaleDateString('pt-BR', { month: 'long' })}:</h4>
+                            
+                            <div class="performance-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Critério</th>
+                                            <th>Peso (1-5)</th>
+                                            <th>Nota (0-10)</th>
+                                            <th>Peso x Nota</th>
+                                            <th>Observações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${evaluation.criteria.map(c => `
                                             <tr>
-                                                <th>Critério</th>
-                                                <th>Peso (1-5)</th>
-                                                <th>Nota (0-10)</th>
-                                                <th>Peso x Nota</th>
-                                                <th>Observações</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            ${evaluation.criteria.map(c => `
-                                                <tr>
-                                                    <td class="criteria-name">${c.name}</td>
-                                                    <td>${c.weight}</td>
-                                                    <td>
-                                                        <div class="score-bar">
-                                                            <div class="score-progress">
-                                                                <div class="score-fill ${getScoreColor(c.score)}" style="width: ${c.score * 10}%"></div>
-                                                            </div>
-                                                            <span class="score-value">${c.score}</span>
+                                                <td class="criteria-name">${c.name}</td>
+                                                <td>${c.weight}</td>
+                                                <td>
+                                                    <div class="score-bar">
+                                                        <div class="score-progress">
+                                                            <div class="score-fill ${getScoreColor(c.score)}" style="width: ${c.score * 10}%"></div>
                                                         </div>
-                                                    </td>
-                                                    <td>${c.result}</td>
-                                                    <td>${c.observation}</td>
-                                                </tr>
-                                            `).join('')}
-                                            <tr style="background: rgba(102, 126, 234, 0.1); font-weight: bold;">
-                                                <td>Total</td>
-                                                <td>${evaluation.totalWeight}</td>
-                                                <td></td>
-                                                <td>${evaluation.totalResult}</td>
-                                                <td></td>
+                                                        <span class="score-value">${c.score}</span>
+                                                    </div>
+                                                </td>
+                                                <td>${c.result}</td>
+                                                <td>${c.observation}</td>
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        `).join('')}
+                                        <tr style="background: rgba(102, 126, 234, 0.1); font-weight: bold;">
+                                            <td>Total</td>
+                                            <td>${evaluation.totalWeight}</td>
+                                            <td></td>
+                                            <td>${evaluation.totalResult}</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                                <h4 style="margin: 30px 0 20px 0; color: #2c3e50;">Seu desempenho nos últimos meses:</h4>
-                                
-                                <div class="chart-container">
+                            <div class="chart-container">
+                                <div>
                                     <div class="chart-title">Desempenho Profissional em %</div>
-                                    <div class="chart">
-                                        ${createChart(chartData)}
-                                    </div>
-                                    <div class="chart-labels">
-                                        ${createChartLabels(chartData)}
-                                    </div>
+                                    <div class="chart">${createChart(chartData)}</div>
+                                    <div class="chart-labels">${createChartLabels(chartData)}</div>
+                                </div>
+                                <div class="chart-right-text">
+                                    Você teve um desempenho mediano ao longo do ano, mas demonstrou um grande avanço no último mês. Parabéns pela evolução e continue nesse ritmo!
                                 </div>
                             </div>
-                            
-                            <div class="right-content">
-                                <div class="summary-section">
-                                    <h4>Resumo de Avaliação</h4>
-                                    <div class="performance-badge ${performance.class}">
-                                        ${performance.level}
-                                    </div>
-                                    <p style="color: #2c3e50; line-height: 1.6; margin-bottom: 20px;">
-                                        ${evaluation.summary}
-                                    </p>
+                        </div>
+                        
+                        <div class="right-content">
+                            <div class="summary-section">
+                                <h4>Resumo de Avaliação</h4>
+                                <div class="performance-badge ${performance.class}">
+                                    ${performance.level}
                                 </div>
-                                
-                                // <div class="motivation-card">
-                                //     <div class="motivation-text">
-                                //         Transforme cada desafio em uma oportunidade de crescimento. Isso é o que realmente importa.
-                                //     </div>
-                                //     <img src="/testeSolicitacao-main/desempenho/img/ilustration.png" alt="">
-                                // </div>
+                                <p style="color: #2c3e50; line-height: 1.6; margin-bottom: 20px;">
+                                    ${evaluation.summary}
+                                </p>
                             </div>
                         </div>
                     </div>
-                `;
-            }).join('');
-        }
+                </div>
+            `;
+        }).join('');
+    }
 
-        // Event listeners
-        document.addEventListener('input', function (e) {
-            if (e.target.matches('.weight-input, .score-input')) {
-                updateCalculations();
-            }
-        });
-
-        document.getElementById('evaluationForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const name = document.getElementById('employeeName').value;
-            const month = document.getElementById('evaluationMonth').value;
-            const summary = document.getElementById('evaluationSummary').value;
-
-            const criteria = [
-                'pontualidade', 'prazos', 'qualidade', 'equipe',
-                'comunicacao', 'proatividade', 'problemas'
-            ];
-
-            const criteriaNames = {
-                'pontualidade': 'Pontualidade e assiduidade',
-                'prazos': 'Cumprimento de prazos',
-                'qualidade': 'Qualidade do trabalho entregue',
-                'equipe': 'Trabalho em equipe',
-                'comunicacao': 'Comunicação e clareza',
-                'proatividade': 'Proatividade',
-                'problemas': 'Capacidade de resolver problemas'
-            };
-
-            let totalWeight = 0;
-            let totalResult = 0;
-            const evaluationCriteria = [];
-
-            criteria.forEach(criterion => {
-                const weight = parseFloat(document.querySelector(`input[data-criteria="${criterion}"].weight-input`).value);
-                const score = parseFloat(document.querySelector(`input[data-criteria="${criterion}"].score-input`).value);
-                const observation = document.querySelector(`input[data-criteria="${criterion}"].obs-input`).value;
-                const result = weight * score;
-
-                evaluationCriteria.push({
-                    name: criteriaNames[criterion],
-                    weight: weight,
-                    score: score,
-                    result: result.toFixed(1),
-                    observation: observation
-                });
-
-                totalWeight += weight;
-                totalResult += result;
-            });
-
-            const evaluation = {
-                name: name,
-                month: month,
-                criteria: evaluationCriteria,
-                totalWeight: totalWeight,
-                totalResult: totalResult.toFixed(1),
-                average: (totalResult / totalWeight).toFixed(1),
-                summary: summary,
-                timestamp: new Date()
-            };
-
-            evaluations.unshift(evaluation);
-            renderEvaluations();
-
-            // Reset form
-            this.reset();
+    // Listeners
+    document.addEventListener('input', function(e) {
+        if (e.target.matches('.weight-input, .score-input')) {
             updateCalculations();
+        }
+    });
 
-            // Scroll to evaluations
-            document.querySelector('.evaluations-section').scrollIntoView({
-                behavior: 'smooth'
+    document.getElementById('evaluationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('employeeName').value;
+        const month = document.getElementById('evaluationMonth').value;
+        const summary = document.getElementById('evaluationSummary').value;
+
+        const criteria = ['pontualidade', 'prazos', 'qualidade', 'equipe', 'comunicacao', 'proatividade', 'problemas'];
+        const criteriaNames = {
+            pontualidade: 'Pontualidade e assiduidade',
+            prazos: 'Cumprimento de prazos',
+            qualidade: 'Qualidade do trabalho entregue',
+            equipe: 'Trabalho em equipe',
+            comunicacao: 'Comunicação e clareza',
+            proatividade: 'Proatividade',
+            problemas: 'Capacidade de resolver problemas'
+        };
+
+        let totalWeight = 0;
+        let totalResult = 0;
+        const evaluationCriteria = [];
+
+        criteria.forEach(criterion => {
+            const weight = parseFloat(document.querySelector(`input[data-criteria="${criterion}"].weight-input`).value);
+            const score = parseFloat(document.querySelector(`input[data-criteria="${criterion}"].score-input`).value);
+            const observation = document.querySelector(`input[data-criteria="${criterion}"].obs-input`).value;
+            const result = weight * score;
+
+            evaluationCriteria.push({
+                name: criteriaNames[criterion],
+                weight,
+                score,
+                result: result.toFixed(1),
+                observation
             });
+
+            totalWeight += weight;
+            totalResult += result;
         });
 
-        // Initialize
-        updateCalculations();
+        const evaluation = {
+            name,
+            month,
+            criteria: evaluationCriteria,
+            totalWeight,
+            totalResult: totalResult.toFixed(1),
+            average: (totalResult / totalWeight).toFixed(1),
+            summary,
+            timestamp: new Date()
+        };
+
+        evaluations.unshift(evaluation);
         renderEvaluations();
-    </script>
+
+        this.reset();
+        updateCalculations();
+
+        document.querySelector('.evaluations-section').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    updateCalculations();
+    renderEvaluations();
+</script>
+
 </body>
 
 </html>
